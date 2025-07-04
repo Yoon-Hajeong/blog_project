@@ -1,0 +1,22 @@
+<!-- blog/templates/blog/blog_list.html -->
+<h1>블로그 글 목록</h1>
+<form method="get" action="{% url 'post_search' %}">
+  <input type="text" name="q" placeholder="검색어 입력">
+  <button type="submit">검색</button>
+</form>
+
+<a href="{% url 'post_write' %}">글 작성하기</a>
+<a href="/">홈으로 돌아가기</a>
+
+<hr />
+<ul>
+  {% for post in posts %}
+  <li>
+    <a href="{% url 'blog_detail' post.id %}">
+      {{ post.title }} - {{ post.category }}
+    </a>
+  </li>
+  {% empty %}
+  <li>아직 게시글이 없습니다.</li>
+  {% endfor %}
+</ul>

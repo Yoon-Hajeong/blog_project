@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ post.title }}</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            border-bottom: 2px solid #007bff;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+        .post-meta {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+            border-left: 4px solid #007bff;
+        }
+        .post-content {
+            line-height: 1.6;
+            margin-bottom: 30px;
+            padding: 20px 0;
+        }
+        .category-badge {
+            display: inline-block;
+            background-color: #28a745;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 14px;
+            margin-left: 10px;
+        }
+        .navigation {
+            border-top: 1px solid #ddd;
+            padding-top: 20px;
+            text-align: center;
+        }
+        .btn {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 4px;
+            margin: 0 5px;
+            display: inline-block;
+        }
+        .btn:hover {
+            background-color: #0056b3;
+        }
+        .btn-secondary {
+            background-color: #6c757d;
+        }
+        .btn-secondary:hover {
+            background-color: #545b62;
+        }
+        .btn-danger {
+            background-color: #dc3545;
+        }
+        .btn-danger:hover {
+            background-color: #c82333;
+        }
+        .btn-warning {
+            background-color: #ffc107;
+            color: #212529;
+        }
+        .btn-warning:hover {
+            background-color: #e0a800;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>{{ post.title }}</h1>
+        
+        <div class="post-meta">
+            <strong>카테고리:</strong> {{ post.get_category_display }}
+            <span class="category-badge">{{ post.category }}</span>
+            <br>
+            <strong>작성자:</strong> {{ post.author.username|default:"익명" }}
+            <br>
+            <strong>작성일:</strong> {{ post.created_at|date:"Y년 m월 d일 H:i" }}
+            {% if post.updated_at != post.created_at %}
+            <br>
+            <strong>수정일:</strong> {{ post.updated_at|date:"Y년 m월 d일 H:i" }}
+            {% endif %}
+        </div>
+        
+        <div class="post-content">
+            {{ post.content|linebreaks }}
+        </div>
+        
+        <div class="navigation">
+            <a href="{% url 'blog_list' %}" class="btn btn-secondary">목록으로</a>
+            {% if user.is_authenticated and user == post.author %}
+                <a href="{% url 'post_edit' post.id %}" class="btn btn-warning">수정</a>
+                <a href="{% url 'post_delete' post.id %}" class="btn btn-danger" 
+                   onclick="return confirm('정말 삭제하시겠습니까?')">삭제</a>
+            {% endif %}
+            <a href="/" class="btn btn-secondary">홈으로</a>
+        </div>
+    </div>
+</body>
+</html>

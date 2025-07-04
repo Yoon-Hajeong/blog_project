@@ -1,0 +1,49 @@
+# 가상환경
+.venv/
+venv/
+ENV/
+
+# Python 캐시/컴파일 파일
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.pyd
+
+# VSCode 설정 (선택)
+.vscode/
+
+# 데이터베이스 (로컬 테스트용 SQLite라면)
+*.sqlite3
+
+# 마이그레이션 파일 (선택적 – 협업 시엔 커밋)
+**/migrations/*.pyc
+**/migrations/__pycache__/
+# 아래 라인은 팀 내 정책에 따라: 처음에는 커밋하는 게 좋음
+# **/migrations/*.py
+
+# 환경변수 설정 파일
+.env
+*.env
+
+# 미디어 업로드 파일
+/media/
+media/
+
+# 정적 파일 수집 디렉토리
+/staticfiles/
+staticfiles/
+
+# 테스트 결과, 로그 파일 등
+*.log
+*.pot
+*.mo
+*.db
+.DS_Store
+
+# PyCharm 설정
+.idea/
+
+# Jupyter 노트북 체크포인트
+.ipynb_checkpoints/
+.env

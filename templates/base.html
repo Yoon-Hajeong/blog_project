@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>영어 블로그</title>
+  </head>
+  <body>
+    <h1>영어 회화 연습 블로그에 오신 걸 환영합니다!</h1>
+
+    <a href="/blog"><button>블로그 입장하기</button></a>
+
+    {% if user.is_authenticated %}
+      <p><strong>{{ user.username }}</strong>님, 환영합니다!</p>
+      <a href="/blog/logout/"><button>로그아웃</button></a>
+    {% else %}
+      <a href="/blog/register/"><button>회원가입</button></a>
+      <a href="/blog/login/"><button>로그인</button></a>
+    {% endif %}
+  </body>
+</html>

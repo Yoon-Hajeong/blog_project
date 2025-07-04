@@ -1,0 +1,7 @@
+django~=5.2.0
+django-environ
+django-debug-toolbar
+django-bootstrap5
+django-extensions
+psycopg2-binary
+python-decouple
