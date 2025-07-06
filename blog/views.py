@@ -68,10 +68,8 @@ def post_delete(request, id):
     return redirect('blog_list')
 
 def post_search(request):
-    """통합된 검색 기능 - URL 파라미터와 GET 파라미터 모두 처리"""
     tag = request.GET.get('q', '')
     if not tag:
-        # URL에서 tag 파라미터 가져오기 (예: /search/diary/)
         tag = request.resolver_match.kwargs.get('tag', '')
     
     posts = Post.objects.filter(
@@ -92,6 +90,9 @@ def blog_detail(request, id):
     try:
         post = Post.objects.get(id=id)
     except Post.DoesNotExist:
-        return render(request, 'blog/post_not_found.html')  # 👈 여기가 핵심!
+        return render(request, 'blog/post_not_found.html')
+    
+    post.views += 1
+    post.save(update_fields=['views'])
 
     return render(request, 'blog/blog_detail.html', {'post': post})
