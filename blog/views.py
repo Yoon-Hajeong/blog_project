@@ -39,12 +39,14 @@ def register_view(request):
 @login_required(login_url='/blog/login/')
 def post_write(request):
     if request.method == "POST":
-        form = PostForm(request.POST)
+        form = PostForm(request.POST, request.FILES)
         if form.is_valid():
             post = form.save(commit=False)
             post.author = request.user
             post.save()  
             return redirect('/blog/')
+        else:
+            print("폼 오류:", form.errors)
     else:
         form = PostForm()
     return render(request, 'blog/post_write.html', {'form': form})
