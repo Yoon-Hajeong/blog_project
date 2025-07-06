@@ -13,6 +13,7 @@ class Post(models.Model):
     author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True, blank=True)
     title = models.CharField(max_length=200)
     content = models.TextField()
+
     category = models.CharField(
         max_length=20,
         choices=CATEGORY_CHOICES,

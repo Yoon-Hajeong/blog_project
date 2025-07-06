@@ -1,100 +1,213 @@
-<!DOCTYPE html>
-<html>
+<html lang="ko">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ post.title }}</title>
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        .container {
             max-width: 800px;
             margin: 0 auto;
-            padding: 20px;
-            background-color: #f5f5f5;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
         }
-        .container {
-            background-color: white;
-            padding: 30px;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        }
+
         h1 {
-            color: #333;
-            border-bottom: 2px solid #007bff;
-            padding-bottom: 10px;
-            margin-bottom: 20px;
-        }
-        .post-meta {
-            background-color: #f8f9fa;
-            padding: 15px;
-            border-radius: 4px;
-            margin-bottom: 20px;
-            border-left: 4px solid #007bff;
-        }
-        .post-content {
-            line-height: 1.6;
+            color: #2c3e50;
+            text-align: center;
             margin-bottom: 30px;
-            padding: 20px 0;
+            font-size: 2.5em;
+            font-weight: 700;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
+
+        .post-meta {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            padding: 25px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(240, 147, 251, 0.3);
+            color: white;
+        }
+
+        .post-meta strong {
+            color: rgba(255, 255, 255, 0.9);
+        }
+
         .category-badge {
             display: inline-block;
-            background-color: #28a745;
+            background: rgba(255, 255, 255, 0.2);
             color: white;
-            padding: 4px 12px;
-            border-radius: 12px;
-            font-size: 14px;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 500;
             margin-left: 10px;
+            backdrop-filter: blur(10px);
         }
+
+        .post-content {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+            font-size: 16px;
+            line-height: 1.8;
+            color: #2c3e50;
+        }
+
         .navigation {
-            border-top: 1px solid #ddd;
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            justify-content: center;
             padding-top: 20px;
-            text-align: center;
+            border-top: 2px solid rgba(102, 126, 234, 0.1);
         }
+
         .btn {
-            background-color: #007bff;
-            color: white;
-            padding: 10px 20px;
+            padding: 12px 24px;
             text-decoration: none;
-            border-radius: 4px;
-            margin: 0 5px;
-            display: inline-block;
+            border-radius: 25px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            border: none;
+            cursor: pointer;
+            font-size: 14px;
         }
-        .btn:hover {
-            background-color: #0056b3;
+
+        .btn-primary {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
         }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+        }
+
         .btn-secondary {
-            background-color: #6c757d;
+            background: linear-gradient(45deg, #6c757d, #495057);
+            color: white;
+            box-shadow: 0 5px 15px rgba(108, 117, 125, 0.3);
         }
+
         .btn-secondary:hover {
-            background-color: #545b62;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(108, 117, 125, 0.4);
         }
-        .btn-danger {
-            background-color: #dc3545;
-        }
-        .btn-danger:hover {
-            background-color: #c82333;
-        }
+
         .btn-warning {
-            background-color: #ffc107;
-            color: #212529;
+            background: linear-gradient(45deg, #ffc107, #ffb300);
+            color: #2c3e50;
+            box-shadow: 0 5px 15px rgba(255, 193, 7, 0.3);
         }
+
         .btn-warning:hover {
-            background-color: #e0a800;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(255, 193, 7, 0.4);
+        }
+
+        .btn-danger {
+            background: linear-gradient(45deg, #dc3545, #c82333);
+            color: white;
+            box-shadow: 0 5px 15px rgba(220, 53, 69, 0.3);
+        }
+
+        .btn-danger:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(220, 53, 69, 0.4);
+        }
+
+        .divider {
+            height: 2px;
+            background: linear-gradient(to right, transparent, #667eea, transparent);
+            border: none;
+            margin: 30px 0;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+                margin: 10px;
+            }
+
+            h1 {
+                font-size: 2em;
+            }
+
+            .navigation {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .btn {
+                width: 100%;
+                justify-content: center;
+                margin-bottom: 10px;
+            }
+        }
+
+        /* 애니메이션 */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .container {
+            animation: fadeInUp 0.6s ease forwards;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>{{ post.title }}</h1>
+        <h1>📖 {{ post.title }}</h1>
         
         <div class="post-meta">
-            <strong>카테고리:</strong> {{ post.get_category_display }}
-            <span class="category-badge">{{ post.category }}</span>
-            <br>
-            <strong>작성자:</strong> {{ post.author.username|default:"익명" }}
-            <br>
-            <strong>작성일:</strong> {{ post.created_at|date:"Y년 m월 d일 H:i" }}
+            <div style="margin-bottom: 10px;">
+                <strong>카테고리:</strong> {{ post.get_category_display }}
+                <span class="category-badge">{{ post.category }}</span>
+            </div>
+            <div style="margin-bottom: 10px;">
+                <strong>작성자:</strong> {{ post.author.username|default:"익명" }}
+            </div>
+            <div style="margin-bottom: 10px;">
+                <strong>작성일:</strong> {{ post.created_at|date:"Y년 m월 d일 H:i" }}
+            </div>
             {% if post.updated_at != post.created_at %}
-            <br>
-            <strong>수정일:</strong> {{ post.updated_at|date:"Y년 m월 d일 H:i" }}
+            <div>
+                <strong>수정일:</strong> {{ post.updated_at|date:"Y년 m월 d일 H:i" }}
+            </div>
             {% endif %}
         </div>
         
@@ -103,13 +216,13 @@
         </div>
         
         <div class="navigation">
-            <a href="{% url 'blog_list' %}" class="btn btn-secondary">목록으로</a>
+            <a href="{% url 'blog_list' %}" class="btn btn-secondary">📋 목록으로</a>
             {% if user.is_authenticated and user == post.author %}
-                <a href="{% url 'post_edit' post.id %}" class="btn btn-warning">수정</a>
+                <a href="{% url 'post_edit' post.id %}" class="btn btn-warning">✏️ 수정</a>
                 <a href="{% url 'post_delete' post.id %}" class="btn btn-danger" 
-                   onclick="return confirm('정말 삭제하시겠습니까?')">삭제</a>
+                   onclick="return confirm('정말 삭제하시겠습니까?')">🗑️ 삭제</a>
             {% endif %}
-            <a href="/" class="btn btn-secondary">홈으로</a>
+            <a href="/" class="btn btn-primary">🏠 홈으로</a>
         </div>
     </div>
 </body>

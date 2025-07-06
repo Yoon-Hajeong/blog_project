@@ -1,22 +1,309 @@
-<!-- blog/templates/blog/blog_list.html -->
-<h1>블로그 글 목록</h1>
-<form method="get" action="{% url 'post_search' %}">
-  <input type="text" name="q" placeholder="검색어 입력">
-  <button type="submit">검색</button>
-</form>
 
-<a href="{% url 'post_write' %}">글 작성하기</a>
-<a href="/">홈으로 돌아가기</a>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>블로그 글 목록</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-<hr />
-<ul>
-  {% for post in posts %}
-  <li>
-    <a href="{% url 'blog_detail' post.id %}">
-      {{ post.title }} - {{ post.category }}
-    </a>
-  </li>
-  {% empty %}
-  <li>아직 게시글이 없습니다.</li>
-  {% endfor %}
-</ul>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 2.5em;
+            font-weight: 700;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .search-section {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            padding: 25px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(240, 147, 251, 0.3);
+        }
+
+        .search-form {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .search-input {
+            flex: 1;
+            padding: 12px 16px;
+            border: none;
+            border-radius: 25px;
+            font-size: 16px;
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+
+        .search-input:focus {
+            outline: none;
+            background: white;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .search-btn {
+            padding: 12px 20px;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            border-radius: 25px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        .search-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .action-btn {
+            padding: 12px 24px;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .write-btn {
+            background: linear-gradient(45deg, #43e97b, #38f9d7);
+            color: #2c3e50;
+            box-shadow: 0 5px 15px rgba(67, 233, 123, 0.3);
+        }
+
+        .write-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(67, 233, 123, 0.4);
+        }
+
+        .home-btn {
+            background: linear-gradient(45deg, #fa709a, #fee140);
+            color: #2c3e50;
+            box-shadow: 0 5px 15px rgba(250, 112, 154, 0.3);
+        }
+
+        .home-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(250, 112, 154, 0.4);
+        }
+
+        .divider {
+            height: 2px;
+            background: linear-gradient(to right, transparent, #667eea, transparent);
+            border: none;
+            margin: 30px 0;
+        }
+
+        .posts-list {
+            list-style: none;
+        }
+
+        .post-item {
+            background: white;
+            margin-bottom: 15px;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+            border: 1px solid rgba(102, 126, 234, 0.1);
+        }
+
+        .post-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .post-link {
+            display: block;
+            padding: 20px;
+            text-decoration: none;
+            color: #2c3e50;
+            transition: all 0.3s ease;
+        }
+
+        .post-link:hover {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .post-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .post-category {
+            display: inline-block;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 500;
+            margin-top: 8px;
+        }
+
+        .post-link:hover .post-category {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: #7f8c8d;
+        }
+
+        .empty-icon {
+            font-size: 4em;
+            margin-bottom: 20px;
+            opacity: 0.3;
+        }
+
+        .empty-text {
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+
+        .empty-subtext {
+            font-size: 14px;
+            opacity: 0.7;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+                margin: 10px;
+            }
+
+            h1 {
+                font-size: 2em;
+            }
+
+            .search-form {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .search-input {
+                width: 100%;
+            }
+
+            .action-buttons {
+                flex-direction: column;
+            }
+
+            .action-btn {
+                text-align: center;
+                justify-content: center;
+            }
+        }
+
+        /* 애니메이션 */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .post-item {
+            animation: fadeInUp 0.6s ease forwards;
+        }
+
+        .post-item:nth-child(1) { animation-delay: 0.1s; }
+        .post-item:nth-child(2) { animation-delay: 0.2s; }
+        .post-item:nth-child(3) { animation-delay: 0.3s; }
+        .post-item:nth-child(4) { animation-delay: 0.4s; }
+        .post-item:nth-child(5) { animation-delay: 0.5s; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>✨ 블로그 글 목록</h1>
+        
+        <div class="search-section">
+            <form class="search-form" method="get" action="{% url 'post_search' %}">
+                <input type="text" name="q" class="search-input" placeholder="궁금한 내용을 검색해보세요...">
+                <button type="submit" class="search-btn">🔍 검색</button>
+            </form>
+        </div>
+
+        <div class="action-buttons">
+            <a href="{% url 'post_write' %}" class="action-btn write-btn">
+                ✍️ 글 작성하기
+            </a>
+            <a href="/" class="action-btn home-btn">
+                🏠 홈으로 돌아가기
+            </a>
+        </div>
+
+        <hr class="divider">
+
+        <ul class="posts-list">
+            {% for post in posts %}
+            <li class="post-item">
+                <a href="{% url 'blog_detail' post.id %}" class="post-link">
+                    <div class="post-title">{{ post.title }}</div>
+                    <span class="post-category">{{ post.category }}</span>
+                </a>
+            </li>
+            {% empty %}
+            <li class="empty-state">
+                <div class="empty-icon">📝</div>
+                <div class="empty-text">아직 게시글이 없습니다</div>
+                <div class="empty-subtext">첫 번째 글을 작성해보세요!</div>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+</body>
+</html>
+Claude

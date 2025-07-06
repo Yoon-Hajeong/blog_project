@@ -1,10 +1,200 @@
-<h2>로그인</h2>
-{% if error %}
-  <p style="color:red">{{ error }}</p>
-{% endif %}
-<form method="post">
-  {% csrf_token %}
-  <input type="text" name="username" placeholder="아이디" required><br>
-  <input type="password" name="password" placeholder="비밀번호" required><br>
-  <button type="submit">로그인</button>
-</form>
+<html>
+<head>
+    <title>로그인 - 영어 블로그</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        
+        .login-container {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+        }
+        
+        h2 {
+            color: #333;
+            margin-bottom: 30px;
+            font-size: 28px;
+            font-weight: 600;
+        }
+        
+        .error-message {
+            color: #e74c3c;
+            background: #fdf2f2;
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border: 1px solid #f5c6cb;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+        
+        input[type="text"], input[type="password"] {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e1e8ed;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: border-color 0.3s ease;
+            box-sizing: border-box;
+        }
+        
+        input[type="text"]:focus, input[type="password"]:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+        
+        .login-btn {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            margin-bottom: 20px;
+        }
+        
+        .login-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+        }
+        
+        .button-group {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .secondary-btn {
+            flex: 1;
+            padding: 12px;
+            background: #f8f9fa;
+            color: #495057;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+        
+        .secondary-btn:hover {
+            background: #e9ecef;
+            border-color: #dee2e6;
+            transform: translateY(-1px);
+        }
+        
+        .home-btn {
+            background: #28a745;
+            color: white;
+            border-color: #28a745;
+        }
+        
+        .home-btn:hover {
+            background: #218838;
+            border-color: #1e7e34;
+            color: white;
+        }
+        
+        .signup-btn {
+            background: #17a2b8;
+            color: white;
+            border-color: #17a2b8;
+        }
+        
+        .signup-btn:hover {
+            background: #138496;
+            border-color: #117a8b;
+            color: white;
+        }
+        
+        .find-account {
+            color: #6c757d;
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.3s ease;
+        }
+        
+        .find-account:hover {
+            color: #495057;
+            text-decoration: underline;
+        }
+        
+        .divider {
+            margin: 25px 0;
+            position: relative;
+            text-align: center;
+            color: #6c757d;
+        }
+        
+        .divider::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: #dee2e6;
+            z-index: 1;
+        }
+        
+        .divider span {
+            background: white;
+            padding: 0 15px;
+            position: relative;
+            z-index: 2;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <h2>로그인</h2>
+        
+        {% if error %}
+            <div class="error-message">{{ error }}</div>
+        {% endif %}
+        
+        <form method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                <input type="text" name="username" placeholder="아이디" required>
+            </div>
+            <div class="form-group">
+                <input type="password" name="password" placeholder="비밀번호" required>
+            </div>
+            <button type="submit" class="login-btn">로그인</button>
+        </form>
+        
+        <div class="button-group">
+            <a href="/" class="secondary-btn home-btn">홈으로 돌아가기</a>
+            <a href="/blog/register/" class="secondary-btn signup-btn">회원가입하기</a>
+        </div>
+        
+        <div class="divider">
+            <span>또는</span>
+        </div>
+        
+        <a href="#" class="find-account" onclick="alert('아이디/비밀번호 찾기 기능은 준비 중입니다.')">아이디/비밀번호 찾기</a>
+    </div>
+</body>
+</html>

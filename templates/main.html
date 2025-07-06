@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>영어 블로그 - 메인</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+        }
+        
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 20px 0;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #667eea;
+        }
+        
+        .nav-buttons {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .nav-btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+        
+        .home-btn {
+            background: #28a745;
+            color: white;
+        }
+        
+        .home-btn:hover {
+            background: #218838;
+            transform: translateY(-2px);
+        }
+        
+        .logout-btn {
+            background: #dc3545;
+            color: white;
+        }
+        
+        .logout-btn:hover {
+            background: #c82333;
+            transform: translateY(-2px);
+        }
+        
+        .main-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+        
+        .welcome-section {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            margin-bottom: 40px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .welcome-section h1 {
+            color: #2c3e50;
+            margin-bottom: 20px;
+            font-size: 28px;
+        }
+        
+        .welcome-section p {
+            color: #6c757d;
+            font-size: 16px;
+            line-height: 1.6;
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+        
+        .feature-card {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .feature-icon {
+            font-size: 48px;
+            margin-bottom: 20px;
+        }
+        
+        .feature-card h3 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 20px;
+        }
+        
+        .feature-card p {
+            color: #6c757d;
+            line-height: 1.6;
+        }
+        
+        .cta-section {
+            background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%);
+            padding: 40px;
+            border-radius: 20px;
+            text-align: center;
+            margin-top: 40px;
+        }
+        
+        .cta-btn {
+            background: white;
+            color: #667eea;
+            padding: 15px 40px;
+            border: none;
+            border-radius: 25px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 20px;
+        }
+        
+        .cta-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(255, 255, 255, 0.3);
+        }
+        
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .main-content {
+                padding: 20px 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="header-content">
+            <div class="logo">🇺🇸 영어 블로그</div>
+            <div class="nav-buttons">
+                <a href="/" class="nav-btn home-btn">홈으로</a>
+                {% if user.is_authenticated %}
+                    <a href="/blog/logout/" class="nav-btn logout-btn">로그아웃</a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    
+    <div class="main-content">
+        <div class="welcome-section">
+            <h1>영어 회화 연습의 새로운 시작!</h1>
+            <p>매일 새로운 영어 표현을 배우고, 실제 대화에서 사용해보세요. 
+               우리의 블로그는 여러분의 영어 실력 향상을 위한 최고의 파트너입니다.</p>
+        </div>
+        
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">📚</div>
+                <h3>일상 회화</h3>
+                <p>매일 사용하는 영어 표현들을 상황별로 정리해서 제공합니다. 카페에서, 쇼핑할 때, 친구와 대화할 때 필요한 표현들을 익혀보세요.</p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">🎯</div>
+                <h3>비즈니스 영어</h3>
+                <p>직장에서 필요한 전문적인 영어 표현들을 배워보세요. 회의, 프레젠테이션, 이메일 작성 등 비즈니스 상황에서 자신감 있게 소통하세요.</p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">🌟</div>
+                <h3>발음 연습</h3>
+                <p>올바른 발음을 위한 팁과 연습 방법을 제공합니다. 원어민처럼 자연스러운 발음으로 더 효과적인 의사소통을 할 수 있습니다.</p>
+            </div>
+        </div>
+        
+        <div class="cta-section">
+            <h2>지금 바로 시작해보세요!</h2>
+            <p>영어 실력 향상의 첫걸음을 내딛어보세요. 함께 성장하는 영어 학습 커뮤니티에 참여하세요.</p>
+            <a href="/blog/" class="cta-btn">블로그 글 보러가기</a>
+        </div>
+    </div>
+</body>
+</html>

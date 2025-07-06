@@ -1,7 +1,6 @@
-<!DOCTYPE html>
 <html>
 <head>
-    <title>글 수정하기</title>
+    <title>검색 결과</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -21,101 +20,147 @@
             text-align: center;
             margin-bottom: 30px;
         }
-        .form-group {
+        .search-info {
+            background-color: #e9ecef;
+            padding: 15px;
+            border-radius: 4px;
             margin-bottom: 20px;
+            text-align: center;
         }
-        label {
-            display: block;
-            margin-bottom: 5px;
-            font-weight: bold;
-            color: #555;
+        .search-box {
+            margin-bottom: 30px;
+            text-align: center;
         }
-        input[type="text"], select, textarea {
-            width: 100%;
+        .search-box input[type="text"] {
             padding: 10px;
+            width: 300px;
             border: 1px solid #ddd;
             border-radius: 4px;
             font-size: 16px;
-            box-sizing: border-box;
         }
-        textarea {
-            height: 200px;
-            resize: vertical;
-        }
-        .btn {
+        .search-box button {
+            padding: 10px 20px;
             background-color: #007bff;
             color: white;
-            padding: 10px 20px;
             border: none;
             border-radius: 4px;
             cursor: pointer;
             font-size: 16px;
-            margin-right: 10px;
-            text-decoration: none;
-            display: inline-block;
+            margin-left: 10px;
         }
-        .btn:hover {
+        .search-box button:hover {
             background-color: #0056b3;
         }
-        .btn-secondary {
-            background-color: #6c757d;
+        .post-list {
+            list-style: none;
+            padding: 0;
         }
-        .btn-secondary:hover {
-            background-color: #545b62;
+        .post-item {
+            background-color: #f8f9fa;
+            margin-bottom: 15px;
+            padding: 20px;
+            border-radius: 4px;
+            border-left: 4px solid #007bff;
         }
-        .btn-danger {
-            background-color: #dc3545;
+        .post-item h3 {
+            margin: 0 0 10px 0;
+            color: #333;
         }
-        .btn-danger:hover {
-            background-color: #c82333;
+        .post-item a {
+            text-decoration: none;
+            color: #007bff;
+            font-weight: bold;
         }
-        .form-actions {
+        .post-item a:hover {
+            text-decoration: underline;
+        }
+        .post-meta {
+            color: #666;
+            font-size: 14px;
+        }
+        .no-results {
+            text-align: center;
+            color: #666;
+            font-style: italic;
+            padding: 40px;
+        }
+        .navigation {
             text-align: center;
             margin-top: 30px;
         }
-        .post-info {
-            background-color: #f8f9fa;
-            padding: 15px;
+        .btn {
+            background-color: #6c757d;
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
             border-radius: 4px;
-            margin-bottom: 20px;
-            border-left: 4px solid #007bff;
+            margin: 0 5px;
+        }
+        .btn:hover {
+            background-color: #545b62;
+        }
+        .category-badge {
+            display: inline-block;
+            background-color: #28a745;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 12px;
+            margin-left: 10px;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>글 수정</h1>
+        <h1>검색 결과</h1>
         
-        <div class="post-info">
-            <strong>원본 글:</strong> {{ post.title }} 
-            <small>({{ post.category }})</small>
+        {% if tag %}
+        <div class="search-info">
+            <strong>"{{ tag }}"</strong>에 대한 검색 결과 (총 {{ posts.count }}개)
+        </div>
+        {% endif %}
+        
+        <!-- 검색 박스 -->
+        <div class="search-box">
+            <form method="get" action="{% url 'post_search' %}">
+                <input type="text" name="q" value="{{ tag }}" placeholder="검색어를 입력하세요">
+                <button type="submit">검색</button>
+            </form>
         </div>
         
-        <form method="post">
-            {% csrf_token %}
-            
-            <div class="form-group">
-                <label for="{{ form.title.id_for_label }}">제목:</label>
-                {{ form.title }}
+        <!-- 검색 결과 -->
+        {% if posts %}
+            <ul class="post-list">
+                {% for post in posts %}
+                <li class="post-item">
+                    <h3>
+                        <a href="{% url 'blog_detail' post.id %}">{{ post.title }}</a>
+                        <span class="category-badge">{{ post.get_category_display }}</span>
+                    </h3>
+                    <div class="post-meta">
+                        작성자: {{ post.author.username|default:"익명" }} | 
+                        작성일: {{ post.created_at|date:"Y-m-d H:i" }}
+                    </div>
+                    <p>{{ post.content|truncatewords:20 }}</p>
+                </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <div class="no-results">
+                {% if tag %}
+                    "{{ tag }}"에 대한 검색 결과가 없습니다.
+                {% else %}
+                    검색어를 입력해 주세요.
+                {% endif %}
             </div>
-            
-            <div class="form-group">
-                <label for="{{ form.category.id_for_label }}">카테고리:</label>
-                {{ form.category }}
-            </div>
-            
-            <div class="form-group">
-                <label for="{{ form.content.id_for_label }}">내용:</label>
-                {{ form.content }}
-            </div>
-            
-            <div class="form-actions">
-                <button type="submit" class="btn">수정하기</button>
-                <a href="{% url 'blog_detail' post.id %}" class="btn btn-secondary">취소</a>
-                <a href="{% url 'post_delete' post.id %}" class="btn btn-danger" 
-                   onclick="return confirm('정말 삭제하시겠습니까?')">삭제</a>
-            </div>
-        </form>
+        {% endif %}
+        
+        <!-- 네비게이션 -->
+        <div class="navigation">
+            <a href="{% url 'blog_list' %}" class="btn">전체 글 보기</a>
+            <a href="{% url 'post_write' %}" class="btn">글 작성하기</a>
+            <a href="/" class="btn">홈으로</a>
+        </div>
     </div>
 </body>
 </html>
