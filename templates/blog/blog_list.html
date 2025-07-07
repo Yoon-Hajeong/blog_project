@@ -276,14 +276,26 @@
             </form>
         </div>
 
-        <div class="action-buttons">
+        {% comment %} <div class="action-buttons">
             <a href="{% url 'post_write' %}" class="action-btn write-btn">
                 ✍️ 글 작성하기
             </a>
             <a href="/" class="action-btn home-btn">
                 🏠 홈으로 돌아가기
             </a>
-        </div>
+        </div> {% endcomment %}
+
+        <div class="action-buttons">
+    <a href="{% url 'post_write' %}" class="action-btn write-btn">
+        ✍️ 글 작성하기
+    </a>
+    <a href="/" class="action-btn home-btn">
+        🏠 홈으로 돌아가기
+    </a>
+    <a href="{% url 'practice_home' %}" class="action-btn practice-btn">
+        📘 영어 학습하기
+    </a>
+</div>
 
         <hr class="divider">
 
