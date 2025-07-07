@@ -3,8 +3,8 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.db.models import Q
-from .models import Post
-from .forms import PostForm
+from .models import Post, Comment
+from .forms import PostForm, CommentForm
 
 def base(request):
     return render(request, 'base.html')
@@ -85,7 +85,7 @@ def blog_list(request):
     posts = Post.objects.all().order_by('-id')
     return render(request, 'blog/blog_list.html', {'posts': posts})
 
-@login_required(login_url='/blog/login/')
+# @login_required(login_url='/blog/login/')
 def blog_detail(request, id):
     try:
         post = Post.objects.get(id=id)
@@ -95,4 +95,55 @@ def blog_detail(request, id):
     post.views += 1
     post.save(update_fields=['views'])
 
-    return render(request, 'blog/blog_detail.html', {'post': post})
+    form = CommentForm()  # ✅ 댓글 폼 생성
+
+    return render(request, 'blog/blog_detail.html', {
+        'post': post,
+        'form': form  # ✅ 템플릿에 전달!
+    })
+
+#댓글
+@login_required(login_url='/blog/login/')
+def add_comment(request, post_id):
+    post = get_object_or_404(Post, id=post_id)
+    parent_id = request.POST.get('parent_id')
+    form = CommentForm(request.POST)
+
+    if form.is_valid():
+        comment = form.save(commit=False)
+        comment.post = post
+        comment.author = request.user
+        if parent_id:
+            comment.parent = Comment.objects.get(id=parent_id)
+        comment.save()
+        
+    return redirect('blog_detail', id=post.id)
+    
+
+@login_required(login_url='/blog/login/')
+def delete_comment(request, comment_id):
+    comment = get_object_or_404(Comment, id=comment_id)
+    post_id = comment.post.id
+    if request.user == comment.author:
+        comment.delete()
+    return redirect('blog_detail', id=post_id)
+
+@login_required(login_url='/blog/login/')
+def edit_comment(request, comment_id):
+    comment = get_object_or_404(Comment, id=comment_id)
+    
+    if request.user != comment.author:
+        return redirect('blog_detail', id=comment.post.id)
+
+    if request.method == 'POST':
+        form = CommentForm(request.POST, instance=comment)
+        if form.is_valid():
+            form.save()
+            return redirect('blog_detail', id=comment.post.id)
+    else:
+        form = CommentForm(instance=comment)
+
+    return render(request, 'blog/edit_comment.html', {
+        'form': form,
+        'comment': comment
+    })

@@ -34,6 +34,55 @@
             <img src="{{ post.image.url }}" alt="게시글 이미지">
         </div>
         {% endif %}
+        
+        <!-- 댓글 리스트 -->
+<h3 style="margin-top: 40px;">💬 댓글</h3>
+<div>
+    {% for comment in post.comments.all %}
+        {% if not comment.parent %}
+            <div style="margin: 20px 0; padding: 10px; border-left: 3px solid #667eea;">
+                <strong>{{ comment.author.username }}</strong> | {{ comment.created_at|date:"Y.m.d H:i" }}
+                <p>{{ comment.content|linebreaks }}</p>
+
+            {% if user == comment.author %}
+                <a href="{% url 'edit_comment' comment.id %}">✏️ 수정</a>
+                <a href="{% url 'delete_comment' comment.id %}">🗑️ 삭제</a>
+            {% endif %}
+
+                <form action="{% url 'add_comment' post.id %}" method="POST" style="margin-top: 10px;">
+                    {% csrf_token %}
+                    <input type="hidden" name="parent_id" value="{{ comment.id }}">
+                    <textarea name="content" rows="1" placeholder="답글 입력..." style="width:100%;"></textarea>
+                    <button type="submit">답글</button>
+                    {% if user == comment.author %}
+                        <a href="{% url 'delete_comment' comment.id %}">삭제</a>
+                    {% endif %}
+                </form>
+                {% for reply in comment.replies.all %}
+                    <div style="margin-left: 30px; margin-top: 10px; padding-left: 10px; border-left: 2px solid #aaa;">
+                        <strong>{{ reply.author.username }}</strong> | {{ reply.created_at|date:"Y.m.d H:i" }}
+                        <p>{{ reply.content|linebreaks }}</p>
+                        {% if user == reply.author %}
+                            <a href="{% url 'delete_comment' reply.id %}">삭제</a>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% empty %}
+        <p>아직 댓글이 없습니다.</p>
+    {% endfor %}
+</div>
+
+<!-- 댓글 작성 폼 -->
+<h4 style="margin-top: 30px;">✏️ 댓글 작성</h4>
+<form action="{% url 'add_comment' post.id %}" method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">댓글 달기</button>
+</form>
+
+
 
         <div class="navigation">
             <a href="{% url 'blog_list' %}" class="btn btn-secondary">📋 목록으로</a>
