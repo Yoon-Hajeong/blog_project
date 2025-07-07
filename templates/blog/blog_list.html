@@ -292,6 +292,18 @@
             <li class="post-item">
                 <a href="{% url 'blog_detail' post.id %}" class="post-link">
                     <div class="post-title">{{ post.title }}</div>
+
+                <div style="font-size: 14px; margin-top: 5px; color: #555;">
+    작성자: 
+    <strong>
+        {% if post.author.profile.nickname %}
+            {{ post.author.profile.nickname }}
+        {% else %}
+            {{ post.author.username }}
+        {% endif %}
+    </strong>
+</div>
+                    
                     <span class="post-category">{{ post.category }}</span>
                 </a>
             </li>

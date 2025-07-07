@@ -1,10 +1,13 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
 from django.db.models import Q
 from .models import Post, Comment
 from .forms import PostForm, CommentForm
+from accounts.models import Profile
+
+User = get_user_model()
 
 def base(request):
     return render(request, 'base.html')
