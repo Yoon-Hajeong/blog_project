@@ -1,17 +1,136 @@
-<form method="POST" enctype="multipart/form-data">
-    {% csrf_token %}
 
-    <label for="id_title">제목:</label><br>
-    {{ form.title }}<br><br>
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>글 작성하기</title>
 
-    <label for="id_content">내용:</label><br>
-    {{ form.content }}<br><br>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-image: url('https://cdn.pixabay.com/photo/2017/04/03/17/17/bear-2198563_1280.png');
+      background-size: 120px;
+      background-repeat: repeat;
+      background-attachment: fixed;
+      background-color: #f5f0e6;
+      margin: 0;
+      padding: 0;
+      color: #4b3f32;
+    }
 
-    <label for="id_category">카테고리:</label><br>
-    {{ form.category }}<br><br>
+    .container {
+      background-color: rgba(255, 250, 244, 0.9);
+      padding: 40px;
+      border-radius: 16px;
+      max-width: 700px;
+      margin: 50px auto;
+      box-shadow: 0 8px 16px rgba(100, 85, 65, 0.1);
+    }
 
-    <label for="id_image">이미지 업로드:</label><br>
-    {{ form.image }}<br><br>
+    h1 {
+      color: #6e4e35;
+      text-align: center;
+      margin-bottom: 30px;
+    }
 
-    <button type="submit">작성하기</button>
-</form>
+    .form-group {
+      margin-bottom: 25px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: bold;
+      color: #5b4431;
+    }
+
+    input[type="text"],
+    textarea,
+    select,
+    input[type="file"] {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #d8c4b0;
+      border-radius: 8px;
+      background-color: #fffdfa;
+      color: #4b3f32;
+      font-size: 16px;
+      box-sizing: border-box;
+    }
+
+    textarea {
+      min-height: 150px;
+      resize: vertical;
+    }
+
+    .navigation {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 30px;
+    }
+
+    .btn {
+      text-decoration: none;
+      padding: 12px 20px;
+      border-radius: 10px;
+      font-size: 15px;
+      color: white;
+      display: inline-block;
+      text-align: center;
+      box-shadow: 0 4px 6px rgba(100, 85, 65, 0.1);
+      transition: transform 0.2s ease;
+      border: none;
+      cursor: pointer;
+    }
+
+    .btn:hover {
+      transform: scale(1.03);
+      opacity: 0.95;
+    }
+
+    .btn-primary {
+      background-color: #a67c52;
+    }
+
+    .btn-secondary {
+      background-color: #8b6b52;
+    }
+  </style>
+</head>
+<body>
+    <div class="container">
+        <h1>✍️ 글 작성하기</h1>
+        
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+
+            <div class="form-group">
+                <label for="id_title">제목:</label>
+                {{ form.title }}
+            </div>
+
+            <div class="form-group">
+                <label for="id_content">내용:</label>
+                {{ form.content }}
+            </div>
+
+            <div class="form-group">
+                <label for="id_category">카테고리:</label>
+                {{ form.category }}
+            </div>
+
+            <div class="form-group">
+                <label for="id_image">이미지 업로드:</label>
+                {{ form.image }}
+            </div>
+
+            <div class="navigation">
+                <button type="submit" class="btn btn-primary">작성하기</button>
+                <a href="{% url 'blog_list' %}" class="btn btn-secondary">목록으로</a>
+            </div>
+        </form>
+    </div>
+</body>
+</html>
+

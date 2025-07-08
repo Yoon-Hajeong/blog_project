@@ -23,7 +23,7 @@ def register(request):
         )
         messages.success(request, '✅ 회원가입이 완료되었습니다. 로그인해주세요.')
         return redirect('login')
-    return render(request, 'blog/register.html')
+    return render(request, 'accounts/register.html')
 
 
 def user_login(request):
@@ -38,14 +38,14 @@ def user_login(request):
             messages.success(request, f'🎉 {user.username}님, 환영합니다!')
             return redirect('/')
         else:
-            return render(request, 'blog/login.html', {'error': '로그인 실패'})
+            return render(request, 'accounts/login.html', {'error': '로그인 실패'})
     return render(request, 'accounts/login.html')
 
 
 def user_logout(request):
     logout(request)
     messages.info(request, '👋 로그아웃되었습니다.')
-    return redirect('/')
+    return render(request, 'accounts/logout.html')
 
 
 @login_required

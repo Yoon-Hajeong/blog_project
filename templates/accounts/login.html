@@ -1,200 +1,168 @@
-<html>
+
+<!DOCTYPE html>
+<html lang="ko">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>로그인 - 영어 블로그</title>
     <style>
-        body {
-            font-family: 'Arial', sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-        }
-        
-        .login-container {
-            background: white;
-            padding: 40px;
-            border-radius: 20px;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
-            width: 100%;
-            max-width: 400px;
-            text-align: center;
-        }
-        
-        h2 {
-            color: #333;
-            margin-bottom: 30px;
-            font-size: 28px;
-            font-weight: 600;
-        }
-        
-        .error-message {
-            color: #e74c3c;
-            background: #fdf2f2;
-            padding: 12px;
-            border-radius: 8px;
-            margin-bottom: 20px;
-            border: 1px solid #f5c6cb;
-        }
-        
-        .form-group {
-            margin-bottom: 20px;
-            text-align: left;
-        }
-        
-        input[type="text"], input[type="password"] {
-            width: 100%;
-            padding: 15px;
-            border: 2px solid #e1e8ed;
-            border-radius: 10px;
-            font-size: 16px;
-            transition: border-color 0.3s ease;
-            box-sizing: border-box;
-        }
-        
-        input[type="text"]:focus, input[type="password"]:focus {
-            outline: none;
-            border-color: #667eea;
-            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
-        }
-        
-        .login-btn {
-            width: 100%;
-            padding: 15px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            border: none;
-            border-radius: 10px;
-            font-size: 18px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
-            margin-bottom: 20px;
-        }
-        
-        .login-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
-        }
-        
-        .button-group {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 20px;
-        }
-        
-        .secondary-btn {
-            flex: 1;
-            padding: 12px;
-            background: #f8f9fa;
-            color: #495057;
-            border: 2px solid #e9ecef;
-            border-radius: 8px;
-            text-decoration: none;
-            font-weight: 500;
-            transition: all 0.3s ease;
-            display: inline-block;
-        }
-        
-        .secondary-btn:hover {
-            background: #e9ecef;
-            border-color: #dee2e6;
-            transform: translateY(-1px);
-        }
-        
-        .home-btn {
-            background: #28a745;
-            color: white;
-            border-color: #28a745;
-        }
-        
-        .home-btn:hover {
-            background: #218838;
-            border-color: #1e7e34;
-            color: white;
-        }
-        
-        .signup-btn {
-            background: #17a2b8;
-            color: white;
-            border-color: #17a2b8;
-        }
-        
-        .signup-btn:hover {
-            background: #138496;
-            border-color: #117a8b;
-            color: white;
-        }
-        
-        .find-account {
-            color: #6c757d;
-            text-decoration: none;
-            font-size: 14px;
-            transition: color 0.3s ease;
-        }
-        
-        .find-account:hover {
-            color: #495057;
-            text-decoration: underline;
-        }
-        
-        .divider {
-            margin: 25px 0;
-            position: relative;
-            text-align: center;
-            color: #6c757d;
-        }
-        
-        .divider::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 0;
-            right: 0;
-            height: 1px;
-            background: #dee2e6;
-            z-index: 1;
-        }
-        
-        .divider span {
-            background: white;
-            padding: 0 15px;
-            position: relative;
-            z-index: 2;
-        }
+      body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background-image: url('https://cdn.pixabay.com/photo/2017/04/03/17/17/bear-2198563_1280.png');
+        background-size: 120px;
+        background-repeat: repeat;
+        background-attachment: fixed;
+        background-color: #f5f0e6;
+        margin: 0;
+        padding: 0;
+        color: #4b3f32;
+        line-height: 1.6;
+      }
+
+      .login-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        padding: 20px;
+      }
+
+      .container {
+        background-color: rgba(255, 250, 244, 0.95);
+        padding: 40px;
+        border-radius: 16px;
+        max-width: 400px;
+        width: 100%;
+        box-shadow: 0 8px 16px rgba(100, 85, 65, 0.1);
+      }
+
+      h2 {
+        text-align: center;
+        color: #6e4e35;
+        margin-bottom: 30px;
+      }
+
+      .form-group {
+        margin-bottom: 20px;
+      }
+
+      input[type="text"],
+      input[type="password"] {
+        width: 100%;
+        padding: 12px;
+        border: 1px solid #d8c4b0;
+        border-radius: 8px;
+        background-color: #fffdfa;
+        color: #4b3f32;
+        font-size: 16px;
+      }
+
+      button[type="submit"] {
+        background-color: #a67c52;
+        color: white;
+        padding: 12px;
+        border: none;
+        border-radius: 8px;
+        font-size: 16px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+      }
+
+      button[type="submit"]:hover {
+        background-color: #946d3e;
+      }
+
+      .action-buttons {
+        margin-top: 20px;
+        display: flex;
+        justify-content: space-between;
+        gap: 10px;
+        flex-wrap: wrap;
+      }
+
+      .btn {
+        text-decoration: none;
+        padding: 10px 16px;
+        border-radius: 8px;
+        font-size: 14px;
+        color: white;
+        text-align: center;
+        flex: 1;
+      }
+
+      .btn-success {
+        background-color: #b3926a;
+      }
+
+      .btn-secondary {
+        background-color: #8b6b52;
+      }
+
+      .btn:hover {
+        opacity: 0.9;
+      }
+
+      .divider {
+        border: none;
+        height: 1px;
+        background-color: #d8c4b0;
+        margin: 30px 0;
+      }
+
+      .find-account {
+        display: block;
+        text-align: center;
+        font-size: 14px;
+        color: #7c5a3c;
+        text-decoration: underline;
+        cursor: pointer;
+      }
+
+      .find-account:hover {
+        color: #5a3f2a;
+      }
+
+      .error-message {
+        background-color: #fce8e6;
+        color: #a94442;
+        padding: 10px;
+        border-radius: 8px;
+        margin-bottom: 20px;
+        text-align: center;
+        font-size: 14px;
+      }
     </style>
 </head>
 <body>
     <div class="login-container">
-        <h2>로그인</h2>
-        
-        {% if error %}
-            <div class="error-message">{{ error }}</div>
-        {% endif %}
-        
-        <form method="post">
-            {% csrf_token %}
-            <div class="form-group">
-                <input type="text" name="username" placeholder="아이디" required>
+        <div class="container">
+            <h2>로그인</h2>
+            
+            {% if error %}
+                <div class="error-message">{{ error }}</div>
+            {% endif %}
+            
+            <form method="post">
+                {% csrf_token %}
+                <div class="form-group">
+                    <input type="text" name="username" placeholder="아이디" required>
+                </div>
+                <div class="form-group">
+                    <input type="password" name="password" placeholder="비밀번호" required>
+                </div>
+                <button type="submit" class="btn btn-primary" style="width: 100%; margin-bottom: var(--space-lg);">로그인</button>
+            </form>
+            
+            <div class="action-buttons">
+                <a href="/" class="btn btn-success">홈으로 돌아가기</a>
+                <a href="/blog/register/" class="btn btn-secondary">회원가입하기</a>
             </div>
-            <div class="form-group">
-                <input type="password" name="password" placeholder="비밀번호" required>
-            </div>
-            <button type="submit" class="login-btn">로그인</button>
-        </form>
-        
-        <div class="button-group">
-            <a href="/" class="secondary-btn home-btn">홈으로 돌아가기</a>
-            <a href="/blog/register/" class="secondary-btn signup-btn">회원가입하기</a>
+            
+            <hr class="divider">
+            
+            <a href="#" class="find-account" onclick="alert('아이디/비밀번호 찾기 기능은 준비 중입니다.')">아이디/비밀번호 찾기</a>
         </div>
-        
-        <div class="divider">
-            <span>또는</span>
-        </div>
-        
-        <a href="#" class="find-account" onclick="alert('아이디/비밀번호 찾기 기능은 준비 중입니다.')">아이디/비밀번호 찾기</a>
     </div>
 </body>
 </html>
+
