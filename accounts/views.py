@@ -34,6 +34,7 @@ def user_login(request):
         user = authenticate(request, username=username, password=raw_password)
         if user is not None:
             login(request, user)
+            list(messages.get_messages(request))
             messages.success(request, f'🎉 {user.username}님, 환영합니다!')
             return redirect('/')
         else:
